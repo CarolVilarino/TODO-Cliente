@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import S from "./header.module.css";
+import S from "../Header/header.module.css";
 
-class User extends React.Component {
+class Card extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -36,3 +36,5 @@ class User extends React.Component {
         );
     }
 }
+
+export default Card;

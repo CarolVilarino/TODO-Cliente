@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { Component, useState } from 'react'
 import Rotas from './Routes'
 import './App.css'
 
