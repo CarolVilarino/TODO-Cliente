@@ -18,7 +18,8 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.cliente p {
-  margin: 0;
-  padding: 0;
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; 
 }

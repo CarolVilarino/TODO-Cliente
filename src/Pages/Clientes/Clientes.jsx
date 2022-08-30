@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import S from "./Clientes.module.css"; 
+import S from "./Clientes.module.css";
 import Card from "../../components/Cards/Card.jsx";
+import Button from "../../components/Buttons/Button.jsx";
 
 class Clientes extends React.Component {
   constructor (props) {
@@ -9,37 +10,56 @@ class Clientes extends React.Component {
 
     this.state = {
       clientes: [],
-      loading: true,
+      page: 1,
+      loading: false,
       error: null, 
       
     };
   } 
 
   componentDidMount() {
-    axios
-      .get("https://randomuser.me/api/?results=10") 
-      .then(response => {
-        this.setState({
-          clientes: response.data.results,
-          loading: false,
-        });
-      })      
-      .catch((error) => {
-        this.setState({
-          error: error.message,
-          loading: false,
-        });
-      }); 
+    this.loadClientes()
+  }
+  // Função para carregar os clientes
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.page !== this.state.page) {
+      this.loadClientes()
+    }
   }
 
+  loadClientes = async () => {
+    try {
+      const { page } = this.state;
+      this.setState({ loading: true, error: null });
+    
+      const response = await axios.get(
+        `https://randomuser.me/api/?page=${page}&results=12`
+      )
+    
+      this.setState((prevState) => ({
+        clientes: [...prevState.clientes, ...response.data.results],
+        loading: false,
+      }))
+    } catch (error) {
+      this.setState({ loading: false, error: error });  
+  } finally {
+    this.setState({ loading: false });
+  }
+}
+
+carregarMais = () => {
+  this.setState((prevState) => ({
+    page: prevState.page + 1
+  }));
+};
+
   render() {
-    // const { loading, error} = this.state;
+    const { loading, error} = this.state;
     const clientesLista = this.state.clientes.map ((c) => ( 
       <Card 
         key={c.login.uuid}
         nome={c.name.first}
-        sobrenome={c.name.last}
-        genero={c.name.gender}
+        sobrenome={c.name.last} 
         email={c.email}
         telefone={c.phone}
         celular={c.cell}
@@ -54,9 +74,14 @@ class Clientes extends React.Component {
 
 
     return (
-      <div>
-        <h1>Clientes</h1> 
-        {clientesLista}
+      <div class="container"> 
+        <section class={S.cards}> 
+          {clientesLista} 
+          {error && <p>{error}</p>}
+          <button onClick={this.carregarMais}>
+            {loading ? "Carregando..." : "Carregar mais"}
+          </button>
+        </section>
       </div>
     );
 

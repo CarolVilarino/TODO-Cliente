@@ -1,20 +1,29 @@
 import React from "react";
 import S from "./header.module.css";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  // const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  // // function handleClick() {
-  // //   navigate('/Cadastrar')
-  // // }
+  function handleClick() {
+    navigate("/Clientes");
+  }
+  function handleClick2() {
+    navigate("/Cadastro");
+  }
 
   return (
-    <header className={S.header}>
-      <h1>teste</h1>
-
-    </header>
+    <div class={S.menu}>
+      <ul >
+        <li>
+          <a onClick={handleClick}>Clientes</a>
+        </li>
+        <li>
+          <a onClick={handleClick2}>Cadastro</a>
+        </li>
+      </ul>
+    </div>
   );
-}
+};
 
 export default Header;
