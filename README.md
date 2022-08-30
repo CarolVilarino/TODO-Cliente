@@ -8,6 +8,12 @@ In the project directory, you can run:
 
 ### `npm start`
 
+Add GitHub Pages dependency package
+Install "gh-pages" package using the below command.
+
+## $ npm install gh-pages — save-dev
+### `npm run deploy`
+
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
